@@ -1,0 +1,117 @@
+[[redirects]]
+from = "/initauth"
+status = 200
+to = "http://175.119.224.227:5003/initauth"
+
+
+
+[[redirects]]
+from = "/app/insertscript"
+status = 200
+to = "http://175.119.224.227:5003/app/insertscript"
+
+
+
+[[redirects]]
+from = "/initkeywordauth"
+status = 200
+to = "http://175.119.224.227:7337/initauth"
+
+
+
+
+
+[[redirects]]
+from = "/admin/daily/chatcount"
+status = 200
+to = "http://175.119.224.227:5003/admin/daily/chatcount"
+
+
+
+[[redirects]]
+from = "/admin/search/daily/chatcount"
+status = 200
+to = "http://175.119.224.227:5003/admin/search/daily/chatcount"
+
+
+
+
+[[redirects]]
+from = "/keywordapp/admin/search/user"
+status = 200
+to = "http://175.119.224.227:5003/keywordapp/admin/search/user"
+
+
+
+[[redirects]]
+from = "/resetaftersuccess"
+status = 200
+to = "http://175.119.224.227:5003/resetaftersuccess"
+
+
+
+
+[[redirects]]
+from = "/find/successedchathistory"
+status = 200
+to = "http://175.119.224.227:5003/find/successedchathistory"
+
+
+
+
+[[redirects]]
+from = "/app/checkshopexist"
+status = 200
+to = "http://175.119.224.227:7337/app/checkshopexist"
+
+
+
+
+[[redirects]]
+from = "/app/changeeachshopconfig"
+status = 200
+to = "http://175.119.224.227:7337/app/changeeachshopconfig"
+
+
+
+
+[[redirects]]
+from = "/app/insertscript"
+status = 200
+to = "http://175.119.224.227:7337/app/insertscript"
+
+
+
+[[redirects]]
+from = "/app/deactivate"
+status = 200
+to = "http://175.119.224.227:7337/app/deactivate"
+
+
+
+[[redirects]]
+from = "/app/reinstallapp"
+status = 200
+to = "http://175.119.224.227:7337/app/reinstallapp"
+
+
+
+
+[[redirects]]
+from = "/find/allchathistory"
+status = 200
+to = "http://175.119.224.227:5003/find/allchathistory"
+
+
+
+
+
+
+
+[[redirects]]
+from = "/keyword/record/excel"
+status = 200
+to = "http://175.119.224.227:5003/keyword/record/excel"
+
+
+
