@@ -1,7 +1,7 @@
 """
 FastAPI backend for a learning project that compares RAG vs plain LLM responses.
 We keep the code intentionally simple and heavily commented for study.
-"""
+""" 
 from datetime import datetime, timezone
 from typing import Any
 
