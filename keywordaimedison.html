@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+
+    <script>
+      let urlFromRequest = new URL(window.location.href);
+
+      // console.log(urlFromRequest);
+      // console.log(urlFromRequest.search);
+      let propParams = new URLSearchParams(urlFromRequest.search);
+
+      // console.log(document.referrer);
+
+      // console.log(propParams);
+      console.log(propParams.getAll("code"));
+
+      let keyForInitAuthToken = propParams.getAll("code")[0];
+
+      console.log(propParams.getAll("code")[0]);
+      let keyForSaveAuthTokenInLocal = propParams.getAll("state")[0];
+      // console.log(localStorage);
+      console.log(keyForInitAuthToken);
+      let reqBody = {
+        grant_type: "authorization_code",
+        // code: "GRDFDWWZFpKtUMYZlVgqyC",
+        code: keyForInitAuthToken,
+
+        redirect_uri:
+          "https://strong-hamster-4d0a18.netlify.app/keywordaimedison.html",
+      };
+
+      let reqHeader = {
+        Authorization:
+          "Basic cUtoNGM2d0dDcHFraXpwRGJJaXE3QzptYlc0RFlFYU05cnBoUGdSb3gwdldD",
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+
+      console.log(keyForSaveAuthTokenInLocal);
+
+      async function passAwayLocalServer() {
+        const responseFromInit = await axios.post("/initkeywordauth", {
+          urlSearchKey: keyForSaveAuthTokenInLocal,
+          body: reqBody,
+          header: reqHeader,
+        });
+
+        console.log(responseFromInit);
+        // console.log(responseFromInit.data.access_token);
+        // console.log(responseFromInit.data.refresh_token);
+        // localStorage.setItem("aimedisonaccess", responseFromInit.data.access_token);
+        // localStorage.setItem("aimedisonrefresh", responseFromInit.data.refresh_token);
+
+        if (responseFromInit) {
+          if (responseFromInit.data) {
+            if (responseFromInit.data.success === true) {
+              // http://aimedison0.cafe24.com:7337/?lang=ko_KR&mall_id=cranis02&nation=KR&shop_no=1&timestamp=1738748802&user_id=cranis02&user_name=%EB%AC%B8%EC%A0%95%ED%99%98&user_type=P&hmac=V5WzUSzxa%2FUKEHPV5t6mcjoB5ssva1gwHydHhfJhQMM%3D
+              console.log(keyForSaveAuthTokenInLocal);
+              window.location.href =
+                "http://aimedison0.cafe24.com:7337/?mall_id=" +
+                keyForSaveAuthTokenInLocal;
+            } else if (responseFromInit.data.exist === true) {
+              console.log(keyForSaveAuthTokenInLocal);
+              window.location.href =
+                "http://aimedison0.cafe24.com:7337/?mall_id=" +
+                keyForSaveAuthTokenInLocal;
+            } else if (responseFromInit.data.failback === true) {
+              // 카페24에 토큰 요청을 아예 하지도 못한 경우입니다
+              window.location.href =
+                "https://" +
+                keyForSaveAuthTokenInLocal +
+                ".cafe24api.com/api/v2/oauth/authorize?response_type=code&client_id=qKh4c6wGCpqkizpDbIiq7C&state=" +
+                keyForSaveAuthTokenInLocal +
+                "&redirect_uri=https://strong-hamster-4d0a18.netlify.app/keywordaimedison.html&scope=mall.write_application, mall.read_application, mall.read_product, mall.read_order, mall.read_customer, mall.read_shipping, mall.read_privacy, mall.read_store";
+            }
+          }
+        }
+      }
+
+      async function requestRefreshToken() {
+        let refreshReqBody = {
+          grant_type: "refresh_token",
+          refresh_token: localStorage.getItem("aimedisonrefresh"),
+        };
+
+        let response00FromInit = await axios.post("/initkeywordauth", {
+          urlSearchKey: keyForSaveAuthTokenInLocal,
+          body: refreshReqBody,
+          header: reqHeader,
+        });
+
+        console.log(response00FromInit.data);
+        localStorage.setItem(
+          "aimedisonaccess",
+          response00FromInit.data.access_token
+        );
+        localStorage.setItem(
+          "aimedisonrefresh",
+          response00FromInit.data.refresh_token
+        );
+      }
+
+      window.onload = function () {
+        // console.log(localStorage.getItem(keyForSaveAuthTokenInLocal + "_access"));
+        // console.log(localStorage.getItem(keyForSaveAuthTokenInLocal + "_refresh"));
+        passAwayLocalServer();
+      };
+
+      // let insertAppScriptHeader = {
+      //   "Authorization": "Bearer " + localStorage.getItem(keyForSaveAuthTokenInLocal + "_access"),
+      //   "Content-Type": "application/json"
+      // };
+
+      async function requestInsertScriptInService() {
+        let insertAppScriptHeader = {
+          Authorization: "Bearer " + localStorage.getItem("aimedisonaccess"),
+          "Content-Type": "application/json",
+        };
+        // console.log(insertAppScriptHeader);
+
+        let responseFromAppScript = await axios.post("/app/insertscript", {
+          // urlSearchKey: keyForSaveAuthTokenInLocal,
+          urlSearchKey: "aimedison",
+          // body: payload,
+          header: insertAppScriptHeader,
+        });
+
+        console.log(responseFromAppScript);
+        console.log(responseFromAppScript.data);
+      }
+    </script>
+  </body>
+</html>
